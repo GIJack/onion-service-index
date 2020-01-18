@@ -2,11 +2,18 @@
 import sys
 sys.path.append('/usr/lib/python3.8/site-packages')
 import random
+import configparser
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request
 from flask import url_for
 
 app = Flask(__name__)
+
+#DEFAULTS
+class configuration:
+    config_file = "/etc/onion-service-index.config"
+    listen_port = 8765
+
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
 PAGE_LENGTH = 128
@@ -89,4 +96,4 @@ def random_():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=8765)
+    app.run(host='localhost', port=configuration.listen_port)
