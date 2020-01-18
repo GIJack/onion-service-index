@@ -1,0 +1,15 @@
+[Unit]
+Description=TOR .Onions Index List WebApp
+Before=yacy.service
+#Before=getty@tty1.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/onion-service-index/app.py
+TimeoutStopSec=1
+StandardOutput=tty
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
