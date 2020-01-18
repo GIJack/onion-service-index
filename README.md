@@ -8,6 +8,6 @@ search engine based on elastisearch and solr, to randomly probe .onion-land.
 The site is no more, but after some searching, I was able to find the source
 code and modify it to run locally, again to feed into yacy.
 
--------------------------------------------------------------------------------
+
 Licesned GNU Affero License.
 © Copyright 2020 GI_Jack
