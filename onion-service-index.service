@@ -4,7 +4,9 @@ Before=yacy.service
 #Before=getty@tty1.service
 
 [Service]
-Type=oneshot
+Type=simple
+User=nobody
+Group=nobody
 ExecStart=/usr/share/onion-service-index/app.py
 TimeoutStopSec=1
 StandardOutput=tty
