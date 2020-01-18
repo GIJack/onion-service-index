@@ -14,6 +14,18 @@ class configuration:
     config_file = "/etc/onion-service-index.config"
     listen_port = 8765
 
+# try and read from a config   
+try: 
+   fileConfig = configparser.RawConfigParser()
+   fileConfig.read(configuration.config_file)
+   try:
+       print("config read error")
+       configuration.listen_port = fileConfig.get("general","port")
+   except:
+       pass
+except:
+    print("Could not open " + configuration.config_file + ", using defaults")
+    pass
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
 PAGE_LENGTH = 128
