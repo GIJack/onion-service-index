@@ -10,23 +10,23 @@ from flask import url_for
 app = Flask(__name__)
 
 #DEFAULTS
-class configuration:
-    config_file = "/etc/onion-service-index.config"
-    listen_port = 8765
-    listen_addr = "localhost"
-
+configuration = {
+    "config_file" : "/etc/onion-service-index.config",
+    "listen_port" : 8765,
+    "listen_addr" : "localhost",
+}
 # try and read from a config   
 try: 
    fileConfig = configparser.RawConfigParser()
    fileConfig.read(configuration.config_file)
    try:
        print("Config read error, falling back to defaults...")
-       configuration.listen_port = fileConfig.get("general","port")
-       configuration.listen_addr = fileConfig.get("general","address")
+       configuration[listen_port] = fileConfig.get("general","port")
+       configuration[listen_addr] = fileConfig.get("general","address")
    except:
        pass
 except:
-    print("Could not open " + configuration.config_file + ", using defaults")
+    print("Could not open " + configuration["config_file"] + ", using defaults")
     pass
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
@@ -110,4 +110,4 @@ def random_():
 
 
 if __name__ == '__main__':
-    app.run(host=configuration.listen_addr, port=configuration.listen_port)
+    app.run(host=configuration["listen_addr"], port=configuration["listen_port"])
