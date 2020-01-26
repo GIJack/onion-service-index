@@ -20,7 +20,7 @@ try:
    fileConfig = configparser.RawConfigParser()
    fileConfig.read(configuration.config_file)
    try:
-       print("config read error")
+       print("Config read error, falling back to defaults...")
        configuration.listen_port = fileConfig.get("general","port")
        configuration.listen_addr = fileConfig.get("general","address")
    except:
