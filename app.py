@@ -13,6 +13,7 @@ app = Flask(__name__)
 class configuration:
     config_file = "/etc/onion-service-index.config"
     listen_port = 8765
+    listen_addr = "localhost"
 
 # try and read from a config   
 try: 
@@ -21,6 +22,7 @@ try:
    try:
        print("config read error")
        configuration.listen_port = fileConfig.get("general","port")
+       configuration.listen_addr = fileConfig.get("general","address")
    except:
        pass
 except:
@@ -108,4 +110,4 @@ def random_():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=configuration.listen_port)
+    app.run(host=configuration.listen_addr, port=configuration.listen_port)
