@@ -5,8 +5,8 @@ Before=yacy.service
 
 [Service]
 Type=simple
-User=nobody
-Group=nobody
+User=http
+Group=http
 ExecStart=/usr/share/onion-service-index/app.py
 TimeoutStopSec=1
 StandardOutput=tty

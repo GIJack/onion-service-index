@@ -3,6 +3,7 @@ import sys
 sys.path.append('/usr/lib/python3.8/site-packages')
 import random
 import configparser
+import logging
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request
 from flask import url_for
@@ -14,20 +15,28 @@ configuration = {
     "config_file" : "/etc/onion-service-index.config",
     "listen_port" : 8765,
     "listen_addr" : "localhost",
+    "logfile"     : "/var/log/onion-service-index.log",
 }
 # try and read from a config   
 try: 
    fileConfig = configparser.RawConfigParser()
    fileConfig.read(configuration.config_file)
    try:
-       print("Config read error, falling back to defaults...")
        configuration[listen_port] = fileConfig.get("general","port")
        configuration[listen_addr] = fileConfig.get("general","address")
+       configuration[logfile]     = fileConfig.get("general","logfile")
    except:
+       print("Config read error, falling back to defaults...")
        pass
 except:
     print("Could not open " + configuration["config_file"] + ", using defaults")
     pass
+
+# Set up Logging
+logger = logging.getLogger('onion-service-index')
+logger.setLevel(logging.INFO)
+log_handler = logging.FileHandler(configuration[logfile])
+logger.addHandler(log_handler)
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
 PAGE_LENGTH = 128
@@ -39,7 +48,6 @@ app.jinja_env.globals.update({
     'app_name': 'All Onion Services',
     'num_onions': NUM_ONIONS,
     'page_length': PAGE_LENGTH,})
-
 
 def num_to_base(n, b=10, min_length=0):
     digits = []
