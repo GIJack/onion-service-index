@@ -35,7 +35,7 @@ except:
 # Set up Logging
 logger = logging.getLogger('onion-service-index')
 logger.setLevel(logging.INFO)
-log_handler = logging.FileHandler(configuration[logfile])
+log_handler = logging.FileHandler(configuration["logfile"])
 logger.addHandler(log_handler)
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
