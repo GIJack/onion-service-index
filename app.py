@@ -21,22 +21,22 @@ configuration = {
 try: 
    fileConfig = configparser.RawConfigParser()
    fileConfig.read(configuration.config_file)
-   try:
-       configuration[listen_port] = fileConfig.get("general","port")
-       configuration[listen_addr] = fileConfig.get("general","address")
-       configuration[logfile]     = fileConfig.get("general","logfile")
-   except:
-       print("Config read error, falling back to defaults...")
-       pass
 except:
     print("Could not open " + configuration["config_file"] + ", using defaults")
     pass
+    
+config_items = ["port", "address", "logfile"]
+for item in config_items:
+    try:
+        configuration[item] = fileConfig.get("general",item) 
+    except:
+        pass
 
 # Set up Logging
-logger = logging.getLogger('onion-service-index')
-logger.setLevel(logging.INFO)
-log_handler = logging.FileHandler(configuration["logfile"])
-logger.addHandler(log_handler)
+#logger = logging.getLogger('onion-service-index')
+#logger.setLevel(logging.INFO)
+#log_handler = logging.FileHandler(configuration["logfile"])
+#logger.addHandler(log_handler)
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
 PAGE_LENGTH = 128
