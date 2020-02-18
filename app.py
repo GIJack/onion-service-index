@@ -20,7 +20,7 @@ configuration = {
 # try and read from a config   
 try: 
    fileConfig = configparser.RawConfigParser()
-   fileConfig.read(configuration.config_file)
+   fileConfig.read(configuration["config_file"])
 except:
     print("Could not open " + configuration["config_file"] + ", using defaults")
     pass
