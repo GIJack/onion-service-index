@@ -13,24 +13,28 @@ app = Flask(__name__)
 #DEFAULTS
 configuration = {
     "config_file" : "/etc/onion-service-index.config",
-    "listen_port" : 8765,
-    "listen_addr" : "localhost",
+    "port" : 8765,
+    "address" : "localhost",
     "logfile"     : "/var/log/onion-service-index.log",
 }
-# try and read from a config   
-try: 
-   fileConfig = configparser.RawConfigParser()
-   fileConfig.read(configuration["config_file"])
-except:
-    print("Could not open " + configuration["config_file"] + ", using defaults")
-    pass
-    
-config_items = ["port", "address", "logfile"]
-for item in config_items:
-    try:
-        configuration[item] = fileConfig.get("general",item) 
+# try and read from a config
+def parse_config(configuration):
+    try: 
+        fileConfig = configparser.RawConfigParser()
+        fileConfig.read(configuration["config_file"])
     except:
-        pass
+        print("Could not open " + configuration["config_file"] + ", using defaults")
+        return
+    
+    print("Loading Configuration from " + configuration["config_file"])
+    config_items = ["port", "address", "logfile"]
+    for item in config_items:
+        try:
+            configuration[item] = fileConfig.get("general",item) 
+        except:
+            pass
+    return configuration
+configuration = parse_config(configuration)
 
 # Set up Logging
 #logger = logging.getLogger('onion-service-index')
@@ -118,4 +122,4 @@ def random_():
 
 
 if __name__ == '__main__':
-    app.run(host=configuration["listen_addr"], port=configuration["listen_port"])
+    app.run(host=configuration["address"], port=configuration["port"])
