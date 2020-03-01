@@ -34,13 +34,17 @@ def parse_config(configuration):
         except:
             pass
     return configuration
+    
 configuration = parse_config(configuration)
 
 # Set up Logging
-#logger = logging.getLogger('onion-service-index')
-#logger.setLevel(logging.INFO)
-#log_handler = logging.FileHandler(configuration["logfile"])
-#logger.addHandler(log_handler)
+try:
+    logger = logging.getLogger('onion-service-index')
+    logger.setLevel(logging.INFO)
+    log_handler = logging.FileHandler(configuration["logfile"])
+    logger.addHandler(log_handler)
+except:
+    print("Could not open logfile: " + configuration["logfile"])
 
 BASE32_CHARS = list('234567abcdefghijklmnopqrstuvwxyz')
 PAGE_LENGTH = 128

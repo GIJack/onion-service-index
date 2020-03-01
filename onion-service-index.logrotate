@@ -1,0 +1,5 @@
+/var/log/onion-service-index.log {
+  create 644 http http
+  missingok
+  size 200M
+}
